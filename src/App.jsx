@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import Tarjetas from "./components/Tarjetas"
 
 function App() {
 
-
   return (
     <>
-      
+      <Tarjetas></Tarjetas>
     </>
   )
 }
