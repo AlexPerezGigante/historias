@@ -11,7 +11,7 @@ export const GlobalContext = createContext()
 
 export function GlobalContextProvider({ children }){
 
-    const [historias, setHistorias] = useState(0)
+    const [historias, setHistorias] = useState([])
 
 
     return(
