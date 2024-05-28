@@ -1,10 +1,14 @@
 import Tarjetas from "./components/Tarjetas"
+import { GlobalContextProvider } from "./context/GlobalContext"
 
 function App() {
 
   return (
     <>
-      <Tarjetas></Tarjetas>
+    <GlobalContextProvider>
+    <Tarjetas></Tarjetas>
+    </GlobalContextProvider>
+      
     </>
   )
 }
