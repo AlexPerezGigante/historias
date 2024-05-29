@@ -25,6 +25,62 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     function controladorBorrarHistoria(){
         console.log('Borrando id: ', id)
     }
+    
+    function controladorFormTitulo(e){
+         const historia = {
+             id: dataHistoria.id,
+             titulo: e,
+             experiencia: dataHistoria.experiencia,
+             comentario: dataHistoria.comentario,
+             imagen: dataHistoria.imagen,
+             fecha: dataHistoria.fecha
+         }
+         setDataHistoria(historia)
+    }
+    function controladorFormFecha(e){
+        const historia = {
+            id: dataHistoria.id,
+            titulo: dataHistoria.titulo,
+            experiencia: dataHistoria.experiencia,
+            comentario: dataHistoria.comentario,
+            imagen: dataHistoria.imagen,
+            fecha: e
+        }
+        setDataHistoria(historia)
+    }
+    function controladorFormExp(e){
+        const historia = {
+            id: dataHistoria.id,
+            titulo: dataHistoria.titulo,
+            experiencia: e,
+            comentario: dataHistoria.comentario,
+            imagen: dataHistoria.imagen,
+            fecha: dataHistoria.fecha
+        }
+        setDataHistoria(historia)
+    }
+    function controladorFormCom(e){
+        const historia = {
+            id: dataHistoria.id,
+            titulo: dataHistoria.titulo,
+            experiencia: dataHistoria.experiencia,
+            comentario: e,
+            imagen: dataHistoria.imagen,
+            fecha: dataHistoria.fecha
+        }
+        setDataHistoria(historia)
+    }
+    function controladorFormImagen(e){
+        const historia = {
+            id: dataHistoria.id,
+            titulo: dataHistoria.titulo,
+            experiencia: dataHistoria.experiencia,
+            comentario: dataHistoria.comentario,
+            imagen: e,
+            fecha: dataHistoria.fecha
+        }
+        setDataHistoria(historia)
+    }
 
     return (
       <>
@@ -64,33 +120,38 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
             <>
               <ModalHeader className="flex flex-col gap-1">Editar historia: {dataHistoria.titulo}</ModalHeader>
               <ModalBody>
-              <Input 
-                    label="Fecha"
-                    placeholder="Ejemplo: Enero de 2024"
+                    <Input 
+                        label="Fecha"
+                        placeholder="Ejemplo: Enero de 2024"
+                        variant="bordered"
+                        defaultValue={dataHistoria.fecha}
+                        onValueChange={(data)=>{controladorFormFecha(data)}}
+                    />
+                    <Input
+                    label="Título"
                     variant="bordered"
-                    value={dataHistoria.fecha}
-                />
-                <Input
-                  label="Título"
-                  variant="bordered"
-                  value={dataHistoria.titulo}
-                />
-                <Textarea
-                    label="Experiencia"
+                    defaultValue={dataHistoria.titulo}
+                    onValueChange={(data)=>{controladorFormTitulo(data)}}
+                    />
+                    <Textarea
+                        label="Experiencia"
+                        variant="bordered"
+                        defaultValue={dataHistoria.experiencia}
+                        onValueChange={(data)=>{controladorFormExp(data)}}
+                    />
+                    <Textarea
+                        label="Comentario"
+                        variant="bordered"
+                        defaultValue={dataHistoria.comentario}
+                        onValueChange={(data)=>{controladorFormCom(data)}}
+                    />
+                    <Input
+                    label="Imagen"
+                    placeholder="URL"
                     variant="bordered"
-                    value={dataHistoria.experiencia}
-                />
-                <Textarea
-                    label="Comentario"
-                    variant="bordered"
-                    value={dataHistoria.comentario}
-                />
-                <Input
-                  label="Imagen"
-                  placeholder="URL"
-                  variant="bordered"
-                  value={dataHistoria.imagen}
-                />
+                    defaultValue={dataHistoria.imagen}
+                    onValueChange={(data)=>{controladorFormImagen(data)}}
+                    />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
