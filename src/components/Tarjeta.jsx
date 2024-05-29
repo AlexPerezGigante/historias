@@ -22,6 +22,10 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
         {onOpen()}
     }
 
+    function controladorBorrarHistoria(){
+        console.log('Borrando id: ', id)
+    }
+
     return (
       <>
         <Card isFooterBlurred className="w-[30%] h-[23em] col-span-12 sm:col-span-7">
@@ -45,7 +49,7 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
                 <Button radius="full" size="sm" className="h-12 bg-transparent border-2 border-[#fbff00]" onPress={controladorBotonEditar}>
                 <Pencil color="#fbff00" className=""/>
                 </Button>
-                <Button radius="full" size="sm" className="mx-3 h-12 bg-transparent border-2 border-[#ff0000]">
+                <Button radius="full" size="sm" className="mx-3 h-12 bg-transparent border-2 border-[#ff0000]" onPress={controladorBorrarHistoria}>
                 <Trash2 color="#ff0000"/>
                 </Button>
             </CardFooter>
