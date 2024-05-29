@@ -12,11 +12,20 @@ export const GlobalContext = createContext()
 export function GlobalContextProvider({ children }){
 
     const [historias, setHistorias] = useState([])
+    const [dataHistoria, setDataHistoria] = useState({
+        id: '',
+        titulo: '',
+        experiencia: '',
+        comentario: '',
+        imagen: '',
+        fecha: ''
+    })
 
 
     return(
         <GlobalContext.Provider value={{
             historias, setHistorias,
+            dataHistoria, setDataHistoria
         }}>
             {children}
         </GlobalContext.Provider>

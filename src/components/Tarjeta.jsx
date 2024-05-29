@@ -1,8 +1,26 @@
 import { Card, Button, CardFooter, CardHeader, Image, useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, Input, ModalFooter, DateInput, Textarea } from "@nextui-org/react"
 import { Pencil, Trash2 } from "lucide-react"
+import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalContext";
 
-function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
+function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
+
+    function controladorBotonEditar(){
+        console.log('controlador')
+        const historia = {
+            id: id,
+            titulo: titulo,
+            experiencia: experiencia,
+            comentario: comentario,
+            imagen: imagen,
+            fecha: fecha
+        }
+        setDataHistoria(historia)
+       
+        {onOpen()}
+    }
 
     return (
       <>
@@ -24,7 +42,7 @@ function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
                         <p className="text-tiny text-white/60">{comentario}</p>
                     </div>
                 </div>
-                <Button radius="full" size="sm" className="h-12 bg-transparent border-2 border-[#fbff00]" onPress={onOpen}>
+                <Button radius="full" size="sm" className="h-12 bg-transparent border-2 border-[#fbff00]" onPress={controladorBotonEditar}>
                 <Pencil color="#fbff00" className=""/>
                 </Button>
                 <Button radius="full" size="sm" className="mx-3 h-12 bg-transparent border-2 border-[#ff0000]">
@@ -40,42 +58,42 @@ function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Editar historia: {titulo}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Editar historia: {dataHistoria.titulo}</ModalHeader>
               <ModalBody>
               <Input 
                     label="Fecha"
                     placeholder="Ejemplo: Enero de 2024"
                     variant="bordered"
-                    value={fecha}
+                    value={dataHistoria.fecha}
                 />
                 <Input
                   label="Título"
                   variant="bordered"
-                  value={titulo}
+                  value={dataHistoria.titulo}
                 />
                 <Textarea
                     label="Experiencia"
                     variant="bordered"
-                    value={experiencia}
+                    value={dataHistoria.experiencia}
                 />
                 <Textarea
                     label="Comentario"
                     variant="bordered"
-                    value={comentario}
+                    value={dataHistoria.comentario}
                 />
                 <Input
                   label="Imagen"
                   placeholder="URL"
                   variant="bordered"
-                  value={imagen}
+                  value={dataHistoria.imagen}
                 />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
+                  Cerrar
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  Sign in
+                  Actualizar
                 </Button>
               </ModalFooter>
             </>

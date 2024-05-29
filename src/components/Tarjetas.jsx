@@ -68,7 +68,7 @@ function Tarjetas() {
       {
         historias.map((element, key)=>{
             return(
-                <Tarjeta key={element.id} titulo={element.titulo} fecha={element.fecha} experiencia={element.experiencia} comentario={element.comentario} imagen={element.imagen}></Tarjeta>
+                <Tarjeta key={element.id} id={element.id} titulo={element.titulo} fecha={element.fecha} experiencia={element.experiencia} comentario={element.comentario} imagen={element.imagen}></Tarjeta>
             )
         })
       }
@@ -114,10 +114,10 @@ function Tarjetas() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
+                  Cerrar
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  Sign in
+                  Crear
                 </Button>
               </ModalFooter>
             </>
