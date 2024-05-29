@@ -1,9 +1,10 @@
-import { Button } from "@nextui-org/react"
+import { Button, DateInput, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, Input, useDisclosure } from "@nextui-org/react"
 import Tarjeta from "./Tarjeta"
 import { Plus } from "lucide-react"
 import { useContext, useEffect } from "react"
 import { GlobalContext } from "../context/GlobalContext"
 import Historias from "../bd/bd.json"
+
 
 
 function Tarjetas() {
@@ -51,6 +52,7 @@ function Tarjetas() {
     ]
 
       const {historias, setHistorias} = useContext(GlobalContext)
+      const {isOpen, onOpen, onOpenChange} = useDisclosure();
       
       useEffect(()=>{
         const datos = Historias.historias
@@ -73,10 +75,58 @@ function Tarjetas() {
 
 
       </div>
-      <Button radius="full" size="md" className="float-end me-10 h-20 bg-primary-400">
+      <Button radius="full" size="md" className="float-end me-10 h-20 bg-primary-400" onPress={onOpen}>
          <Plus className="" color="#000000"/>
-        </Button>
+      </Button>
+
+        <Modal
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Crear historia</ModalHeader>
+              <ModalBody>
+              <Input 
+                    label="Fecha"
+                    placeholder="Ejemplo: Enero de 2024"
+                    variant="bordered"
+                />
+                <Input
+                  label="Título"
+                  variant="bordered"
+                />
+                <Textarea
+                    label="Experiencia"
+                    variant="bordered"
+                />
+                <Textarea
+                    label="Comentario"
+                    variant="bordered"
+                />
+                <Input
+                  label="Imagen"
+                  placeholder="URL"
+                  variant="bordered"
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Sign in
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       </>
+
+      
     )
 }
 export default Tarjetas

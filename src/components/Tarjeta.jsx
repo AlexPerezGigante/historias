@@ -1,7 +1,8 @@
-import { Card, Button, CardFooter, CardHeader, Image } from "@nextui-org/react"
+import { Card, Button, CardFooter, CardHeader, Image, useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, Input, ModalFooter, DateInput, Textarea } from "@nextui-org/react"
 import { Pencil, Trash2 } from "lucide-react"
 
 function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     return (
       <>
@@ -23,7 +24,7 @@ function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
                         <p className="text-tiny text-white/60">{comentario}</p>
                     </div>
                 </div>
-                <Button radius="full" size="sm" className="h-12 bg-transparent border-2 border-[#fbff00]">
+                <Button radius="full" size="sm" className="h-12 bg-transparent border-2 border-[#fbff00]" onPress={onOpen}>
                 <Pencil color="#fbff00" className=""/>
                 </Button>
                 <Button radius="full" size="sm" className="mx-3 h-12 bg-transparent border-2 border-[#ff0000]">
@@ -31,6 +32,56 @@ function Tarjeta({titulo, fecha, experiencia, comentario, imagen}) {
                 </Button>
             </CardFooter>
         </Card>
+        <Modal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Editar historia: {titulo}</ModalHeader>
+              <ModalBody>
+              <Input 
+                    label="Fecha"
+                    placeholder="Ejemplo: Enero de 2024"
+                    variant="bordered"
+                    value={fecha}
+                />
+                <Input
+                  label="Título"
+                  variant="bordered"
+                  value={titulo}
+                />
+                <Textarea
+                    label="Experiencia"
+                    variant="bordered"
+                    value={experiencia}
+                />
+                <Textarea
+                    label="Comentario"
+                    variant="bordered"
+                    value={comentario}
+                />
+                <Input
+                  label="Imagen"
+                  placeholder="URL"
+                  variant="bordered"
+                  value={imagen}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Sign in
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       </>
     )
   }
