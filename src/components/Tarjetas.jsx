@@ -52,13 +52,88 @@ function Tarjetas() {
     ]
 
       const {historias, setHistorias} = useContext(GlobalContext)
-      const {isOpen, onOpen, onOpenChange} = useDisclosure();
+      const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
+      const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
       
       useEffect(()=>{
         const datos = Historias.historias
+        
         setHistorias(datos)
       },[])
 
+      function controladorAbrirForm(){
+        const historia = {
+          id: '',
+          titulo:'' ,
+          experiencia: '',
+          comentario: '',
+          imagen: '',
+          fecha: ''
+        }
+        setDataHistoria(historia)
+        {onOpen()}
+      }
+
+      function controladorFormTitulo(e){
+        const historia = {
+            id: '',
+            titulo: e,
+            experiencia: dataHistoria.experiencia,
+            comentario: dataHistoria.comentario,
+            imagen: dataHistoria.imagen,
+            fecha: dataHistoria.fecha
+        }
+        setDataHistoria(historia)
+   }
+   function controladorFormFecha(e){
+       const historia = {
+           id: '',
+           titulo: dataHistoria.titulo,
+           experiencia: dataHistoria.experiencia,
+           comentario: dataHistoria.comentario,
+           imagen: dataHistoria.imagen,
+           fecha: e
+       }
+       setDataHistoria(historia)
+   }
+   function controladorFormExp(e){
+       const historia = {
+           id: '',
+           titulo: dataHistoria.titulo,
+           experiencia: e,
+           comentario: dataHistoria.comentario,
+           imagen: dataHistoria.imagen,
+           fecha: dataHistoria.fecha
+       }
+       setDataHistoria(historia)
+   }
+   function controladorFormCom(e){
+       const historia = {
+           id: '',
+           titulo: dataHistoria.titulo,
+           experiencia: dataHistoria.experiencia,
+           comentario: e,
+           imagen: dataHistoria.imagen,
+           fecha: dataHistoria.fecha
+       }
+       setDataHistoria(historia)
+   }
+   function controladorFormImagen(e){
+       const historia = {
+           id: '',
+           titulo: dataHistoria.titulo,
+           experiencia: dataHistoria.experiencia,
+           comentario: dataHistoria.comentario,
+           imagen: e,
+           fecha: dataHistoria.fecha
+       }
+       setDataHistoria(historia)
+   }
+
+   function controladorCreaHistorias(){
+       console.log(dataHistoria)
+       {onClose()}
+   }
     
 
     return (
@@ -75,7 +150,7 @@ function Tarjetas() {
 
 
       </div>
-      <Button radius="full" size="md" className="float-end me-10 h-20 bg-primary-400" onPress={onOpen}>
+      <Button radius="full" size="md" className="float-end me-10 h-20 bg-primary-400" onPress={controladorAbrirForm}>
          <Plus className="" color="#000000"/>
       </Button>
 
@@ -93,30 +168,40 @@ function Tarjetas() {
                     label="Fecha"
                     placeholder="Ejemplo: Enero de 2024"
                     variant="bordered"
+                    onValueChange={(data)=>{controladorFormFecha(data)}}
+                    required
                 />
                 <Input
                   label="Título"
                   variant="bordered"
+                  onValueChange={(data)=>{controladorFormTitulo(data)}}
+                  required
                 />
                 <Textarea
                     label="Experiencia"
                     variant="bordered"
+                    onValueChange={(data)=>{controladorFormExp(data)}}
+                    required
                 />
                 <Textarea
                     label="Comentario"
                     variant="bordered"
+                    onValueChange={(data)=>{controladorFormCom(data)}}
+                    required
                 />
                 <Input
                   label="Imagen"
                   placeholder="URL"
                   variant="bordered"
+                  onValueChange={(data)=>{controladorFormImagen(data)}}
+                  required
                 />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={controladorCreaHistorias}>
                   Crear
                 </Button>
               </ModalFooter>

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 
 function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
     const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
 
     function controladorBotonEditar(){
@@ -82,6 +82,11 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
         setDataHistoria(historia)
     }
 
+    function controladorActualizaHistorias(){
+        console.log(dataHistoria)
+        {onClose()}
+    }
+
     return (
       <>
         <Card isFooterBlurred className="w-[30%] h-[23em] col-span-12 sm:col-span-7">
@@ -157,7 +162,7 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={controladorActualizaHistorias}>
                   Actualizar
                 </Button>
               </ModalFooter>
