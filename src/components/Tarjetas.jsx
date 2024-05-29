@@ -9,56 +9,26 @@ import Historias from "../bd/bd.json"
 
 function Tarjetas() {
 
-    const db = [{
-        "id":"1",
-        "titulo": "Tailandia",
-        "fecha": "Junio de 2023",
-        "experiencia": "Exploración de las playas paradisíacas y la bulliciosa vida urbana de Bangkok. Una combinación perfecta entre relajación y aventura.",
-        "comentario": "Desde las vibrantes calles de Bangkok hasta las serenas islas del sur, este viaje a Tailandia fue una experiencia inolvidable. Nos sumergimos en la cultura tailandesa, probando deliciosas comidas callejeras, visitando antiguos templos y participando en emocionantes excursiones de buceo. Cada día nos sorprendía con nuevas maravillas y nos dejaba con recuerdos duraderos.",
-        "imagen": "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg"
-      },
-      {
-        "id":"1",
-        "titulo": "Tailandia",
-        "fecha": "Junio de 2023",
-        "experiencia": "Exploración de las playas paradisíacas y la bulliciosa vida urbana de Bangkok. Una combinación perfecta entre relajación y aventura.",
-        "comentario": "Desde las vibrantes calles de Bangkok hasta las serenas islas del sur, este viaje a Tailandia fue una experiencia inolvidable. Nos sumergimos en la cultura tailandesa, probando deliciosas comidas callejeras, visitando antiguos templos y participando en emocionantes excursiones de buceo. Cada día nos sorprendía con nuevas maravillas y nos dejaba con recuerdos duraderos.",
-        "imagen": "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg"
-      },
-      {
-        "id":"1",
-        "titulo": "Tailandia",
-        "fecha": "Junio de 2023",
-        "experiencia": "Exploración de las playas paradisíacas y la bulliciosa vida urbana de Bangkok. Una combinación perfecta entre relajación y aventura.",
-        "comentario": "Desde las vibrantes calles de Bangkok hasta las serenas islas del sur, este viaje a Tailandia fue una experiencia inolvidable. Nos sumergimos en la cultura tailandesa, probando deliciosas comidas callejeras, visitando antiguos templos y participando en emocionantes excursiones de buceo. Cada día nos sorprendía con nuevas maravillas y nos dejaba con recuerdos duraderos.",
-        "imagen": "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg"
-      },
-      {
-        "id":"1",
-        "titulo": "Tailandia",
-        "fecha": "Junio de 2023",
-        "experiencia": "Exploración de las playas paradisíacas y la bulliciosa vida urbana de Bangkok. Una combinación perfecta entre relajación y aventura.",
-        "comentario": "Desde las vibrantes calles de Bangkok hasta las serenas islas del sur, este viaje a Tailandia fue una experiencia inolvidable. Nos sumergimos en la cultura tailandesa, probando deliciosas comidas callejeras, visitando antiguos templos y participando en emocionantes excursiones de buceo. Cada día nos sorprendía con nuevas maravillas y nos dejaba con recuerdos duraderos.",
-        "imagen": "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg"
-      },
-      {
-        "id":"1",
-        "titulo": "Tailandia",
-        "fecha": "Junio de 2023",
-        "experiencia": "Exploración de las playas paradisíacas y la bulliciosa vida urbana de Bangkok. Una combinación perfecta entre relajación y aventura.",
-        "comentario": "Desde las vibrantes calles de Bangkok hasta las serenas islas del sur, este viaje a Tailandia fue una experiencia inolvidable. Nos sumergimos en la cultura tailandesa, probando deliciosas comidas callejeras, visitando antiguos templos y participando en emocionantes excursiones de buceo. Cada día nos sorprendía con nuevas maravillas y nos dejaba con recuerdos duraderos.",
-        "imagen": "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg"
-      },
-    ]
 
       const {historias, setHistorias} = useContext(GlobalContext)
       const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
       const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
       
+
+      
+      
       useEffect(()=>{
-        const datos = Historias.historias
-        
-        setHistorias(datos)
+        async function buscaHistorias(){
+          const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+          const usuarios = await fetch(url)
+         
+          setHistorias(await usuarios.json())
+          
+          console.log(historias)
+  
+        }
+        buscaHistorias()
+
       },[])
 
       function controladorAbrirForm(){
@@ -131,8 +101,25 @@ function Tarjetas() {
    }
 
    function controladorCreaHistorias(){
-       console.log(dataHistoria)
-       {onClose()}
+
+      async function post(){
+        const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+        await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataHistoria)
+        })
+
+        const usuarios = await fetch(url)
+         
+        setHistorias(await usuarios.json())
+      }
+      
+      post()
+
+
+
+      {onClose()}
    }
     
 
