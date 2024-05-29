@@ -6,6 +6,7 @@ import { GlobalContext } from "../context/GlobalContext";
 function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
     const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
+    const {historias, setHistorias} = useContext(GlobalContext)
 
     function controladorBotonEditar(){
         console.log('controlador')
@@ -23,7 +24,20 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     }
 
     function controladorBorrarHistoria(){
-        console.log('Borrando id: ', id)
+        async function borrarPost(){
+            const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+            const urlDelStr = 'https://json-server-delta-seven.vercel.app/historias/'+id
+            const urlDel = new URL(urlDelStr)
+            await fetch(urlDel, {
+              method: 'DELETE',
+            })
+    
+            const usuarios = await fetch(url)
+             
+            setHistorias(await usuarios.json())
+          }
+
+          borrarPost()
     }
     
     function controladorFormTitulo(e){
