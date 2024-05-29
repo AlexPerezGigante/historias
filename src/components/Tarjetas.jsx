@@ -14,15 +14,19 @@ function Tarjetas() {
       const {dataHistoria, setDataHistoria} = useContext(GlobalContext)
       const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
       
+
+      
+      
       useEffect(()=>{
-
         async function buscaHistorias(){
-        const url = new URL('https://json-server-delta-seven.vercel.app/historias')
-        const usuarios = await fetch(url)
-        setHistorias(await usuarios.json())
-
+          const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+          const usuarios = await fetch(url)
+         
+          setHistorias(await usuarios.json())
+          
+          console.log(historias)
+  
         }
-
         buscaHistorias()
 
       },[])
@@ -97,8 +101,25 @@ function Tarjetas() {
    }
 
    function controladorCreaHistorias(){
-       console.log(dataHistoria)
-       {onClose()}
+
+      async function post(){
+        const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+        await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataHistoria)
+        })
+
+        const usuarios = await fetch(url)
+         
+        setHistorias(await usuarios.json())
+      }
+      
+      post()
+
+
+
+      {onClose()}
    }
     
 
