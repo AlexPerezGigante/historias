@@ -9,7 +9,6 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     const {historias, setHistorias} = useContext(GlobalContext)
 
     function controladorBotonEditar(){
-        console.log('controlador')
         const historia = {
             id: id,
             titulo: titulo,
@@ -97,7 +96,24 @@ function Tarjeta({id, titulo, fecha, experiencia, comentario, imagen}) {
     }
 
     function controladorActualizaHistorias(){
-        console.log(dataHistoria)
+
+        async function put(){
+            const url = new URL('https://json-server-delta-seven.vercel.app/historias')
+            const urlDelStr = 'https://json-server-delta-seven.vercel.app/historias/'+id
+            const urlDel = new URL(urlDelStr)
+       
+            await fetch(urlDel, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(dataHistoria)
+            })
+    
+            const usuarios = await fetch(url)
+             
+            setHistorias(await usuarios.json())
+          }
+          
+          put()
         {onClose()}
     }
 
